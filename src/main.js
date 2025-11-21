@@ -1,15 +1,58 @@
 import './style.css';
 
-// Loading Animation Sequence
+const qs = (id) => document.getElementById(id);
+
+// Loading Animation Sequence with logo translation
 window.addEventListener('load', () => {
+  const heroLogo = qs('hero-logo');
+  const navLogoTarget = qs('nav-logo-target');
+  const curtain = qs('curtain-bg');
+  const loaderOverlay = qs('loader-overlay');
+  const heroText = qs('hero-text');
+  const heroIconMain = qs('hero-icon-main');
+  const navLogoContainer = qs('nav-logo-container');
+  const navTextContainer = qs('nav-text-container');
+
+  if (
+    !heroLogo ||
+    !navLogoTarget ||
+    !curtain ||
+    !loaderOverlay ||
+    !heroText ||
+    !heroIconMain ||
+    !navLogoContainer ||
+    !navTextContainer
+  ) {
+    return;
+  }
+
   setTimeout(() => {
-    document.getElementById('loader')?.classList.add('curtain-rise');
-  }, 2500);
+    heroIconMain.classList.remove('animate-bounce');
+    heroText.style.opacity = '0';
+
+    const startRect = heroLogo.getBoundingClientRect();
+    const endRect = navLogoTarget.getBoundingClientRect();
+
+    const translateX = endRect.left - startRect.left;
+    const translateY = endRect.top - startRect.top;
+    const scale = 0.5;
+
+    curtain.classList.add('slide-up');
+
+    heroLogo.style.transition = 'transform 1.5s cubic-bezier(0.77, 0, 0.175, 1)';
+    heroLogo.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+    setTimeout(() => {
+      loaderOverlay.style.display = 'none';
+      navLogoContainer.style.opacity = '1';
+      navTextContainer.classList.add('visible');
+    }, 1500);
+  }, 2200);
 });
 
 // Navbar Scroll Effect
 window.addEventListener('scroll', () => {
-  const navbar = document.getElementById('navbar');
+  const navbar = qs('navbar');
   if (!navbar) return;
 
   if (window.scrollY > 50) {
@@ -23,7 +66,7 @@ window.addEventListener('scroll', () => {
 
 // Music Widget Toggle
 function toggleMusic() {
-  const player = document.getElementById('music-player');
+  const player = qs('music-player');
   if (!player) return;
 
   if (player.classList.contains('hidden')) {

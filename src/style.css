@@ -42,23 +42,18 @@
     text-shadow: 0 0 5px rgba(197, 160, 89, 0.3), 0 0 10px rgba(197, 160, 89, 0.2);
 }
 
-/* Curtain / Loader Animation */
-#loader {
-    position: fixed;
-    inset: 0;
-    background-color: #0a0a0a;
-    z-index: 100;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Curtain Animation */
+#curtain-bg {
+    transform: translateY(0);
     transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-#loader.curtain-rise {
+#curtain-bg.slide-up {
     transform: translateY(-100%);
 }
 
-.loader-content {
+.loader-content,
+#loader-overlay {
     opacity: 0;
     animation: logoFadeIn 1.5s ease-out forwards 0.5s;
 }
@@ -73,4 +68,21 @@
         opacity: 1;
         transform: scale(1);
     }
+}
+
+/* Navbar logo transition helpers */
+#nav-logo-container {
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+#nav-text-container {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.8s ease-out 1s;
+}
+
+#nav-text-container.visible {
+    opacity: 1;
+    transform: translateX(0);
 }
